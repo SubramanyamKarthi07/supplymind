@@ -1,8 +1,7 @@
 #SupplyMind
-AI-Driven Supply Chain Intelligence Platform
-SupplyMind is an AI-powered platform that turns raw supply chain data into actionable intelligence — forecasting demand, flagging risks, and optimizing inventory and procurement decisions before problems hit the shelf. [One-line edit: describe who it's for, e.g. "Built for FMCG distributors, retailers, and D2C brands operating across multiple regions."]
 
-A Skillvance Technologies product. [Remove this line if SupplyMind is a standalone or intern capstone project.]
+AI-Driven Supply Chain Intelligence Platform
+SupplyMind is an AI-powered platform that turns raw supply chain data into actionable intelligence — forecasting demand, flagging risks, and optimizing inventory and procurement decisions before problems hit the shelf. 
 
 
 Overview
