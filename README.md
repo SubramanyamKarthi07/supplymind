@@ -1,35 +1,70 @@
-# SupplyMind
+# Getting Started with Create React App
 
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-**AI-Driven Supply Chain Intelligence Platform**
+## Available Scripts
 
-Early development. SupplyMind is currently in the concept and early-build stage. This README describes the vision and direction — features and structure will evolve as development progresses.
+In the project directory, you can run:
 
-What is SupplyMind?
-SupplyMind is an AI-powered platform that turns raw supply chain data into actionable intelligence — helping businesses forecast demand, anticipate risks, and make smarter inventory and procurement decisions.
-Most supply chains generate huge amounts of data that never becomes a decision. SupplyMind aims to close that gap by combining machine learning with operational data to surface clear, timely recommendations.
-A Skillvance Technologies product.
+### `npm start`
 
-The Problem
-Demand planning and inventory decisions are still largely made on spreadsheets and intuition. The result is stockouts, overstock, and missed revenue — problems that get worse as operations scale across more products and regions.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The Vision
-SupplyMind is being built to provide:
-Demand forecasting — predict future demand across products, regions, and time periods.
-Inventory optimization — recommend smarter stock and reorder decisions.
-Risk detection — flag supplier delays, demand spikes, and anomalies early.
-Scenario simulation — model "what-if" situations to stress-test plans.
-Dashboard & insights — make all of the above accessible and actionable.
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
+### `npm test`
 
-Status
-Currently in early development. Initial work is focused on [data modeling and forecasting groundwork — edit to match your actual current focus].
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-Tech Stack (planned)
-Python · [machine learning libraries] · [API framework] · [database] · [dashboard]
+### `npm run build`
 
-To be finalized as the build progresses.
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-About
-Built by Skillvance Technologies.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
