@@ -1,7 +1,7 @@
-SupplyMind
+# SupplyMind
 
 
-AI-Driven Supply Chain Intelligence Platform
+**AI-Driven Supply Chain Intelligence Platform**
 
 Early development. SupplyMind is currently in the concept and early-build stage. This README describes the vision and direction — features and structure will evolve as development progresses.
 
