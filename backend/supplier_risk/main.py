@@ -787,3 +787,477 @@ best_model = lgb.LGBMClassifier(
 )
 best_model.fit(X, y)
 
+import joblib
+import lightgbm as lgb
+from sklearn.preprocessing import StandardScaler
+
+# Initialize and fit the scaler on the entire dataset
+scaler_final = StandardScaler()
+X_scaled_final = scaler_final.fit_transform(X)
+
+# Initialize the best model with the parameters found by Optuna
+best_model = lgb.LGBMClassifier(
+    **best_params,
+    class_weight='balanced',
+    random_state=42,
+    verbose=-1
+)
+
+# Fit the best model on the entire scaled dataset
+best_model.fit(X_scaled_final, y)
+
+# Save the model and the scaler
+joblib.dump(best_model, 'supplier_risk_model.pkl')
+joblib.dump(scaler_final, 'supplier_risk_scaler.pkl')
+print("Model and scaler saved successfully!")
+
+!pip install pyngrok nest_asyncio
+from fastapi import FastAPI
+from pydantic import BaseModel
+import pandas as pd
+import numpy as np
+import joblib
+import uvicorn
+from pyngrok import ngrok
+import nest_asyncio
+import threading
+
+# ---------------------------------------------------
+# LOAD MODEL + SCALER
+# ---------------------------------------------------
+
+# Load the cleaned model and scaler
+model = joblib.load("supplier_risk_model_cleaned.pkl")
+scaler = joblib.load("supplier_risk_scaler_cleaned.pkl")
+
+# ---------------------------------------------------
+# LOAD DATA
+# ---------------------------------------------------
+
+df = pd.read_csv("supplier_performance.csv")
+
+# ---------------------------------------------------
+# FASTAPI APP
+# ---------------------------------------------------
+
+app = FastAPI(title="Supplier Risk API")
+
+# ---------------------------------------------------
+# INPUT SCHEMA
+# ---------------------------------------------------
+
+class SupplierRequest(BaseModel):
+    supplier_id: str
+
+# ---------------------------------------------------
+# FEATURE ENGINEERING FUNCTION
+# ---------------------------------------------------
+
+def compute_supplier_features(supplier_id):
+
+    supplier_df = df[df["supplier_id"] == supplier_id].copy()
+
+    if len(supplier_df) < 6: # Need at least 6 months for trends
+        return None, None, None, None, None # Return None for all values if insufficient data
+
+    supplier_df = supplier_df.sort_values("month")
+
+    last6 = supplier_df.tail(6)
+    last3 = last6.tail(3)
+    prev3 = last6.head(3)
+
+    # Lead time trend
+    lt_trend = (last3['avg_lead_time_days'].mean() - prev3['avg_lead_time_days'].mean())
+
+    # Other features (averages over last 3 months)
+    avg_quality_reject = last3['quality_reject_rate_pct'].mean()
+    avg_fill_rate = last3['fill_rate_pct'].mean()
+    avg_capacity_util = last3['capacity_utilization_pct'].mean()
+
+    # Compile features for prediction
+    features = pd.DataFrame([
+        {
+            "lead_time_trend": round(lt_trend, 2),
+            "avg_quality_reject": round(avg_quality_reject, 2),
+            "avg_fill_rate": round(avg_fill_rate, 2),
+            "avg_capacity_util": round(avg_capacity_util, 2)
+        }
+    ])
+
+    # Also return raw values for potential risk explanation
+    return features, lt_trend, avg_quality_reject, avg_fill_rate, avg_capacity_util
+
+# ---------------------------------------------------
+# RISK TIER FUNCTION
+# ---------------------------------------------------
+
+def get_risk_tier(score):
+
+    if score >= 70:
+        return "High"
+
+    elif score >= 40:
+        return "Medium"
+
+    else:
+        return "Low"
+
+# ---------------------------------------------------
+# API ENDPOINT
+# ---------------------------------------------------
+
+@app.post("/api/supplier-risk")
+def supplier_risk(request: SupplierRequest):
+
+    features_df, lt_trend, avg_quality_reject, avg_fill_rate, avg_capacity_util = compute_supplier_features(request.supplier_id)
+
+    if features_df is None:
+        return {"error": "Supplier not found or insufficient data (less than 6 months of performance data)"}
+
+    # Scale features
+    scaled = scaler.transform(features_df)
+
+    # Predict risk probability
+    risk_prob = model.predict_proba(scaled)[0][1]
+
+    # Convert to 0-100
+    risk_score = round(risk_prob * 100, 2)
+
+    risk_tier = get_risk_tier(risk_score)
+
+    # Top features for explanation (based on the clean feature set)
+    top_features = []
+
+    if lt_trend > 2: # Example threshold for increasing lead time
+        top_features.append("Increasing Lead Time Trend")
+
+    if avg_quality_reject > 3: # Example threshold for high reject rate
+        top_features.append("High Avg Quality Reject Rate")
+
+    if avg_fill_rate < 85: # Example threshold for low fill rate
+        top_features.append("Low Avg Fill Rate")
+
+    if avg_capacity_util < 70: # Example threshold for low capacity utilization
+        top_features.append("Low Avg Capacity Utilization")
+
+    return {
+        "supplier_id": request.supplier_id,
+        "risk_score": risk_score,
+        "risk_tier": risk_tier,
+        "top_features": top_features,
+        "lead_time_trend": round(float(lt_trend), 2),
+        "avg_quality_reject": round(float(avg_quality_reject), 2),
+        "avg_fill_rate": round(float(avg_fill_rate), 2),
+        "avg_capacity_util": round(float(avg_capacity_util), 2)
+    }
+
+# ---------------------------------------------------
+# RUN API
+# ---------------------------------------------------
+
+nest_asyncio.apply()
+
+ngrok.set_auth_token("3Dvw26qTcrNe8w5DKCzJr73GMWr_3iHNi5G7L6fSzQvfqMEBU")
+
+def run_uvicorn():
+    uvicorn.run(app, host="0.0.0.0", port=8001, log_level="warning")
+
+thread = threading.Thread(target=run_uvicorn)
+thread.start()
+
+public_url = ngrok.connect(8001)
+
+print("Swagger URL:")
+print(public_url)
+print("API is running! You can access it via the ngrok URL.")
+
+import requests
+import json
+
+# Extract the ngrok URL from the previous output programmatically
+# This assumes the ngrok URL is in the last print statement of the cell P9QTKs7n21GZ
+import re
+
+# The ngrok URL is usually in the form 'https://<random_string>.ngrok-free.dev'
+# Let's assume it's part of the standard_output of the cell P9QTKs7n21GZ
+# and we need to parse it from the execution_results. The regex will help.
+
+# Given the current setup, we need to manually get the URL from the user's execution output.
+# For now, let's use the one explicitly mentioned in the previous turn.
+
+public_url_from_context = "https://disprove-gains-prognosis.ngrok-free.dev"
+api_endpoint = f"{public_url_from_context}/api/supplier-risk"
+
+# Define the supplier ID to test
+supplier_id_to_test = "SUP-0069"
+
+# Prepare the request payload
+payload = {"supplier_id": supplier_id_to_test}
+headers = {"Content-Type": "application/json"}
+
+print(f"Testing API endpoint: {api_endpoint}")
+print(f"Requesting risk for supplier: {supplier_id_to_test}")
+
+try:
+    response = requests.post(api_endpoint, data=json.dumps(payload), headers=headers)
+    response.raise_for_status()  # Raise an exception for HTTP errors
+    result = response.json()
+    print("\nAPI Response:")
+    print(json.dumps(result, indent=2))
+except requests.exceptions.RequestException as e:
+    print(f"Error making API request: {e}")
+    if hasattr(e, 'response') and e.response is not None:
+        print(f"Response content: {e.response.text}")
+
+
+# Remove the leaking feature 'otif_slope_3m'
+features_cleaned = [
+    'lead_time_trend',
+    'avg_quality_reject',
+    'avg_fill_rate',
+    'avg_capacity_util'
+]
+
+print('Features used for the cleaned model:')
+print(features_cleaned)
+
+import pandas as pd
+import lightgbm as lgb
+import numpy as np
+from sklearn.model_selection import StratifiedKFold
+from sklearn.metrics import roc_auc_score
+from sklearn.preprocessing import StandardScaler
+
+df_sup = pd.read_csv('suppliers.csv')
+df_perf = pd.read_csv('supplier_performance.csv')
+
+df_perf['month'] = pd.to_datetime(df_perf['month'])
+df_perf = df_perf.sort_values(
+    ['supplier_id','month'])
+
+supplier_features = []
+for sup_id in df_perf['supplier_id'].unique():
+    sup = df_perf[
+        df_perf['supplier_id']==sup_id
+    ].tail(6)
+    if len(sup) < 3:
+        continue
+    last3 = sup.tail(3)
+    prev3 = sup.head(3)
+    otif_slope = (
+        last3['otif_percentage'].mean() -
+        prev3['otif_percentage'].mean()
+    )
+    lt_trend = (
+        last3['avg_lead_time_days'].mean() -
+        prev3['avg_lead_time_days'].mean()
+    )
+    supplier_features.append({
+        'supplier_id': sup_id,
+        'otif_slope_3m': round(otif_slope,2),
+        'lead_time_trend': round(lt_trend,2),
+        'avg_quality_reject': round(
+            last3['quality_reject_rate_pct'].mean(),2),
+        'avg_fill_rate': round(
+            last3['fill_rate_pct'].mean(),2),
+        'avg_capacity_util': round(
+            last3['capacity_utilization_pct'].mean(),2),
+        'is_high_risk': int(
+            last3['otif_percentage'].mean() < 78
+            and otif_slope < -2
+        )
+    })
+
+df_feat_cleaned = pd.DataFrame(supplier_features)
+print("Shape (after removing leaking feature):", df_feat_cleaned.shape)
+print("High risk rate (after removing leaking feature):",
+      round(df_feat_cleaned['is_high_risk'].mean()*100,1),"%")
+
+# The definition of features_cleaned has been moved to a previous cell (15df6bd2).
+
+X_cleaned = df_feat_cleaned[features_cleaned].fillna(0).values
+y_cleaned = df_feat_cleaned['is_high_risk'].values
+
+# 5-fold cross validation
+cv_cleaned = StratifiedKFold(n_splits=5,
+                      shuffle=True,
+                      random_state=42)
+auc_scores_cleaned = []
+
+for fold, (train_idx, val_idx) in enumerate(
+        cv_cleaned.split(X_cleaned, y_cleaned)):
+    X_train_cleaned = X_cleaned[train_idx]
+    X_val_cleaned = X_cleaned[val_idx]
+    y_train_cleaned = y_cleaned[train_idx]
+    y_val_cleaned = y_cleaned[val_idx]
+
+    scaler_cleaned = StandardScaler()
+    X_train_scaled_cleaned = scaler_cleaned.fit_transform(X_train_cleaned)
+    X_val_scaled_cleaned = scaler_cleaned.transform(X_val_cleaned)
+
+    model_cleaned = lgb.LGBMClassifier(
+        n_estimators=100,
+        learning_rate=0.05,
+        num_leaves=15,
+        class_weight='balanced',
+        random_state=42,
+        verbose=-1
+    )
+    model_cleaned.fit(X_train_scaled_cleaned, y_train_cleaned)
+    preds_cleaned = model_cleaned.predict_proba(X_val_scaled_cleaned)[:,1]
+
+    if len(set(y_val_cleaned)) > 1:
+        auc_cleaned = roc_auc_score(y_val_cleaned, preds_cleaned)
+        auc_scores_cleaned.append(auc_cleaned)
+        print(f"Fold {fold+1} AUC: {auc_cleaned:.4f}")
+
+print(f"\nNew Mean CV AUC (without otif_slope_3m): {np.mean(auc_scores_cleaned):.4f}")
+print(f"New Std Dev CV AUC (without otif_slope_3m): {np.std(auc_scores_cleaned):.4f}")
+
+feature_importance_cleaned = pd.DataFrame({
+    'feature': features_cleaned,
+    'importance': model_cleaned.feature_importances_
+}).sort_values('importance', ascending=False)
+print("\nFeature importance (without otif_slope_3m):")
+print(feature_importance_cleaned.to_string(index=False))
+
+import optuna
+import lightgbm as lgb
+import numpy as np
+from sklearn.model_selection import StratifiedKFold
+from sklearn.metrics import roc_auc_score
+from sklearn.preprocessing import StandardScaler
+
+# Define the Optuna objective function for the cleaned feature set
+def objective_cleaned(trial):
+    n_estimators = trial.suggest_int('n_estimators', 50, 300)
+    learning_rate = trial.suggest_float('learning_rate', 0.01, 0.1)
+    num_leaves = trial.suggest_int('num_leaves', 10, 40)
+    min_child_samples = trial.suggest_int('min_child_samples', 5, 30)
+
+    cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    auc_scores = []
+
+    for fold, (train_idx, val_idx) in enumerate(cv.split(X_cleaned, y_cleaned)):
+        X_train_fold = X_cleaned[train_idx]
+        X_val_fold = X_cleaned[val_idx]
+        y_train_fold = y_cleaned[train_idx]
+        y_val_fold = y_cleaned[val_idx]
+
+        scaler_fold = StandardScaler()
+        X_train_scaled_fold = scaler_fold.fit_transform(X_train_fold)
+        X_val_scaled_fold = scaler_fold.transform(X_val_fold)
+
+        model_fold = lgb.LGBMClassifier(
+            n_estimators=n_estimators,
+            learning_rate=learning_rate,
+            num_leaves=num_leaves,
+            min_child_samples=min_child_samples,
+            class_weight='balanced',
+            random_state=42,
+            verbose=-1
+        )
+        model_fold.fit(X_train_scaled_fold, y_train_fold)
+
+        preds_fold = model_fold.predict_proba(X_val_scaled_fold)[:, 1]
+        if len(np.unique(y_val_fold)) > 1:
+            auc_fold = roc_auc_score(y_val_fold, preds_fold)
+            auc_scores.append(auc_fold)
+
+    return np.mean(auc_scores) if auc_scores else 0.0
+
+# Create an Optuna study and optimize for the cleaned model
+study_cleaned = optuna.create_study(direction='maximize', study_name='lgbm_cleaned_optimization')
+study_cleaned.optimize(objective_cleaned, n_trials=30, show_progress_bar=True)
+
+print("\nNumber of finished trials for cleaned model: ", len(study_cleaned.trials))
+print("Best trial for cleaned model:")
+trial_cleaned = study_cleaned.best_trial
+
+print(f"  Value (Mean CV AUC): {trial_cleaned.value:.4f}")
+print("  Params: ")
+for key, value in trial_cleaned.params.items():
+    print(f"    {key}: {value}")
+
+best_params_cleaned = trial_cleaned.params
+best_cv_auc_cleaned = trial_cleaned.value
+
+# Define the Optuna objective function for the cleaned feature set
+def objective_cleaned(trial):
+    n_estimators = trial.suggest_int('n_estimators', 50, 300)
+    learning_rate = trial.suggest_float('learning_rate', 0.01, 0.1)
+    num_leaves = trial.suggest_int('num_leaves', 10, 40)
+    min_child_samples = trial.suggest_int('min_child_samples', 5, 30)
+
+    cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    auc_scores = []
+
+    for fold, (train_idx, val_idx) in enumerate(cv.split(X_cleaned, y_cleaned)):
+        X_train_fold = X_cleaned[train_idx]
+        X_val_fold = X_cleaned[val_idx]
+        y_train_fold = y_cleaned[train_idx]
+        y_val_fold = y_cleaned[val_idx]
+
+        scaler_fold = StandardScaler()
+        X_train_scaled_fold = scaler_fold.fit_transform(X_train_fold)
+        X_val_scaled_fold = scaler_fold.transform(X_val_fold)
+
+        model_fold = lgb.LGBMClassifier(
+            n_estimators=n_estimators,
+            learning_rate=learning_rate,
+            num_leaves=num_leaves,
+            min_child_samples=min_child_samples,
+            class_weight='balanced',
+            random_state=42,
+            verbose=-1
+        )
+        model_fold.fit(X_train_scaled_fold, y_train_fold)
+
+        preds_fold = model_fold.predict_proba(X_val_scaled_fold)[:, 1]
+        if len(np.unique(y_val_fold)) > 1:
+            auc_fold = roc_auc_score(y_val_fold, preds_fold)
+            auc_scores.append(auc_fold)
+
+    return np.mean(auc_scores) if auc_scores else 0.0
+
+import optuna
+
+# Create an Optuna study and optimize for the cleaned model
+study_cleaned = optuna.create_study(direction='maximize', study_name='lgbm_cleaned_optimization')
+study_cleaned.optimize(objective_cleaned, n_trials=30, show_progress_bar=True)
+
+print("\nNumber of finished trials for cleaned model: ", len(study_cleaned.trials))
+print("Best trial for cleaned model:")
+trial_cleaned = study_cleaned.best_trial
+
+print(f"  Value (Mean CV AUC): {trial_cleaned.value:.4f}")
+print("  Params: ")
+for key, value in trial_cleaned.params.items():
+    print(f"    {key}: {value}")
+
+best_params_cleaned = trial_cleaned.params
+best_cv_auc_cleaned = trial_cleaned.value
+
+import joblib
+import lightgbm as lgb
+from sklearn.preprocessing import StandardScaler
+
+# Initialize and fit the scaler on the entire X_cleaned dataset
+scaler_final_cleaned = StandardScaler()
+X_scaled_final_cleaned = scaler_final_cleaned.fit_transform(X_cleaned)
+
+# Initialize the best model with the parameters found by Optuna for the cleaned features
+best_model_cleaned = lgb.LGBMClassifier(
+    **best_params_cleaned,
+    class_weight='balanced',
+    random_state=42,
+    verbose=-1
+)
+
+# Fit the best model on the entire scaled dataset with cleaned features
+best_model_cleaned.fit(X_scaled_final_cleaned, y_cleaned)
+
+# Save the cleaned model and the cleaned scaler
+joblib.dump(best_model_cleaned, 'supplier_risk_model_cleaned.pkl')
+joblib.dump(scaler_final_cleaned, 'supplier_risk_scaler_cleaned.pkl')
+print("Cleaned model and scaler saved successfully!")
