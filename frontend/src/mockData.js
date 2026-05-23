@@ -83,12 +83,13 @@ export const supplierDetails = {
       'OTIF declining'
     ],
     trend:[
-      {month:'Jan', otif:78},
-      {month:'Feb', otif:74},
-      {month:'Mar', otif:70},
-      {month:'Apr', otif:65},
-      {month:'May', otif:61},
-    ],
+  {month:'Jan', otif:82},
+  {month:'Feb', otif:79},
+  {month:'Mar', otif:75},
+  {month:'Apr', otif:71},
+  {month:'May', otif:66},
+  {month:'Jun', otif:61},
+],
     skus:[
       'SKU-00064',
       'SKU-00312'
@@ -109,13 +110,14 @@ export const supplierDetails = {
       'Demand spikes',
       'Packaging delays'
     ],
-    trend:[
-      {month:'Jan', otif:84},
-      {month:'Feb', otif:82},
-      {month:'Mar', otif:79},
-      {month:'Apr', otif:76},
-      {month:'May', otif:74},
-    ],
+   trend:[
+  {month:'Jan', otif:88},
+  {month:'Feb', otif:86},
+  {month:'Mar', otif:83},
+  {month:'Apr', otif:80},
+  {month:'May', otif:77},
+  {month:'Jun', otif:74},
+],
     skus:[
       'SKU-00123'
     ]
@@ -220,11 +222,11 @@ export const mockInventorySummary = {
   total_skus_tracked: 500,
   critical_skus: 3,
   total_inventory_value: 12500000,
-  average_days_of_cover: 43.6,
+  avg_days_of_cover: 43.6,
   forecast_accuracy: {
     avg_mape: 12.8
   },
-  top_critical_skus: [
+  top_3_critical: [
     {
       sku:'SKU-00064',
       name:'Electronics Component 64',

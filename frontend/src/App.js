@@ -13,7 +13,11 @@ import {
   mockSuppliers,
   mockInventorySummary
 } from './mocks/mockData'
-import { USE_MOCK, RESPONSE_PLAN_API } from './api/config'
+import {
+  USE_MOCK,
+  RESPONSE_PLAN_API,
+ 
+} from './api/config'
 
 /* =========================
    INVENTORY DATA
@@ -69,16 +73,52 @@ const Dashboard = () => {
 
   const [summary, setSummary] = useState(mockInventorySummary)
 
-  useEffect(() => {
-    fetch('https://numerator-cataract-bloating.ngrok-free.dev/api/analytics/inventory-summary')
-      .then(r => r.json())
-      .then(data => setSummary(data))
-      .catch(() => {
-        console.log('Using mock inventory summary')
-        setSummary(mockInventorySummary)
-      })
-  }, [])
+  const [forecast, setForecast] = useState(
+    mockInventorySummary.forecast_accuracy
+  )
 
+  const [summaryStatus, setSummaryStatus] = useState('loading')
+
+  useEffect(() => {
+
+    // Inventory Summary API
+     
+  fetch(
+  'https://numerator-cataract-bloating.ngrok-free.dev/api/analytics/inventory-summary',
+  {
+    headers:{
+      'ngrok-skip-browser-warning':'true'
+    }
+  }
+)
+    .then(r => r.json())
+    .then(data => {
+      setSummary(data)
+      setSummaryStatus('live')
+    })
+    .catch(error => {
+      console.log('Inventory API error:', error)
+      setSummary(mockInventorySummary)
+      setSummaryStatus('mock')
+    })
+
+    // Forecast Accuracy API
+ 
+  fetch(
+  'https://numerator-cataract-bloating.ngrok-free.dev/api/analytics/forecast-accuracy',
+  {
+    headers:{
+      'ngrok-skip-browser-warning':'true'
+    }
+  }
+)
+  .then(r => r.json())
+  .then(data => setForecast(data))
+  .catch(error => {
+    console.log('Forecast API error:', error)
+    setForecast(mockInventorySummary.forecast_accuracy)
+  })
+  }, [])
   const kpis = [
     {
       label:'Total SKUs Tracked',
@@ -97,7 +137,7 @@ const Dashboard = () => {
     },
     {
       label:'Average Days of Cover',
-      value:summary.average_days_of_cover,
+      value:summary.avg_days_of_cover,
       color:'#B7791F'
     }
   ]
@@ -114,13 +154,16 @@ const Dashboard = () => {
         Command Center
       </h2>
 
-      <p style={{
-        color:'#4A5568',
-        marginBottom:'30px'
-      }}>
-        Inventory summary from Pavan API with mock fallback
-      </p>
-
+     <p style={{
+  color:'#4A5568',
+  marginBottom:'30px'
+}}>
+  {summaryStatus === 'live'
+  ? 'Live inventory summary from Pavan API'
+  : summaryStatus === 'mock'
+  ? 'Showing mock inventory data'
+  : 'Loading inventory summary...'}
+</p>
       {/* KPI Cards */}
 
       <div style={{
@@ -225,10 +268,9 @@ const Dashboard = () => {
 
             <tbody>
 
-              {summary.top_critical_skus?.slice(0,3).map((sku,i) => (
-
+              {summary.top_3_critical?.slice(0,3).map((sku,i) => (
                 <tr
-                  key={sku.sku}
+                  key={sku.sku_name || sku.sku}
                   onClick={() => alert('Please open Disruptions Center from sidebar')}
                   style={{
                     background:i%2===0 ? '#F4F6F9' : 'white',
@@ -241,11 +283,11 @@ const Dashboard = () => {
                     fontWeight:'bold',
                     color:'#1B2A4A'
                   }}>
-                    {sku.sku}
+                    {sku.sku_name || sku.sku}
                   </td>
 
                   <td style={{padding:'10px'}}>
-                    {sku.name}
+                    {sku.sku_name || sku.name}
                   </td>
 
                   <td style={{
@@ -257,7 +299,7 @@ const Dashboard = () => {
                   </td>
 
                   <td style={{padding:'10px'}}>
-                    {sku.stock}
+                    -
                   </td>
 
                 </tr>
@@ -295,7 +337,7 @@ const Dashboard = () => {
             color:'#1A6B3A',
             marginTop:'20px'
           }}>
-            {summary.forecast_accuracy?.avg_mape}%
+            {forecast?.avg_mape}%
           </h1>
 
           <p style={{
@@ -311,6 +353,7 @@ const Dashboard = () => {
     </div>
   )
 }
+
 
 /* =========================
    INVENTORY PAGE
@@ -399,7 +442,7 @@ const rc = (r) =>
     ? '#B7791F'
     : '#C53030'
 
-const tc = (t) =>
+const tc = (t = '') =>
   t.startsWith('↑')
     ? '#1A6B3A'
     : t.startsWith('↓')
@@ -409,15 +452,43 @@ const tc = (t) =>
 const Suppliers = () => {
     const [suppliers, setSuppliers] = useState(mockSuppliers)
 
-  useEffect(() => {
-    fetch('https://numerator-cataract-bloating.ngrok-free.dev/api/analytics/supplier-risks')
-      .then(r => r.json())
-      .then(data => setSuppliers(data))
-      .catch(() => {
-        console.log('Using mock supplier data')
-        setSuppliers(mockSuppliers)
-      })
-  }, [])
+ useEffect(() => {
+
+  fetch(
+    'https://numerator-cataract-bloating.ngrok-free.dev/api/analytics/supplier-risks',
+    {
+      headers:{
+        'ngrok-skip-browser-warning':'true'
+      }
+    }
+  )
+    .then(r => r.json())
+    .then(data => {
+  const fixedSuppliers = data.map((s, index) => ({
+  id: s.supplier_id || index,
+  name: s.supplier_id,
+  city: '-',
+  tier: s.city_tier || '-',
+  otif: s.current_otif || '-',
+  risk:
+    s.current_otif < 70
+      ? 'High'
+      : s.current_otif < 85
+      ? 'Medium'
+      : 'Low',
+  trend:'Stable'
+}))
+
+  setSuppliers(fixedSuppliers)
+})
+    .catch(error => {
+
+      console.log('Supplier API error:', error)
+
+      setSuppliers(mockSuppliers)
+    })
+
+}, [])
 
   return (
   <div style={{
@@ -476,8 +547,7 @@ const Suppliers = () => {
 
       <tbody>
         {suppliers.map((s,i) => (
-          <tr
-            key={s.id}
+          <tr key={s.id || s.supplier_id || i}
             style={{
               background:i%2===0 ? '#F4F6F9' : 'white'
             }}
@@ -486,40 +556,40 @@ const Suppliers = () => {
             <td style={{padding:'10px'}}>
 
   <Link
-    to={`/suppliers/${s.id}`}
+    to={`/suppliers/${s.id || s.supplier_id}`}
     style={{
       color:'#1B2A4A',
       textDecoration:'none',
       fontWeight:'bold'
     }}
   >
-    {s.name}
+    {s.name || s.supplier_name}
   </Link>
 
 </td>
-            <td style={{padding:'10px'}}>{s.city}</td>
-            <td style={{padding:'10px'}}>{s.tier}</td>
+            <td style={{padding:'10px'}}>{s.city || s.supplier_city || '-'}</td>
+            <td style={{padding:'10px'}}>{s.tier || s.city_tier || '-'}</td>
             <td style={{padding:'10px'}}>{s.otif}%</td>
 
             <td style={{
               padding:'10px',
               fontWeight:'bold',
-              color:rc(s.risk)
+              color: rc(s.risk || s.risk_level || s.risk_tier)
             }}>
-              {s.risk}
+              {s.risk || s.risk_level || s.risk_tier || '-'}
             </td>
 
             <td style={{
               padding:'10px',
               fontWeight:'bold',
-              color:tc(s.trend)
+              color:tc(s.trend || 'Stable')
             }}>
-              {s.trend}
+              {s.trend || 'Stable'}
             </td>
             <td style={{padding:'10px'}}>
 
   <Link
-  to={`/suppliers/${s.id}`}
+  to={`/suppliers/${s.id || s.supplier_id}`}
   style={{
     color:'#1B2A4A',
     fontWeight:'bold',
@@ -572,12 +642,24 @@ const Disruptions = () => {
 
   const [responsePlan, setResponsePlan] = useState('')
 
+
+
   useEffect(() => {
-    fetch('https://numerator-cataract-bloating.ngrok-free.dev/api/analytics/disruption-risks')
-      .then(r => r.json())
-      .then(data => setDisruptions(data))
-      .catch(() => console.log('Using mock data'))
-  }, [])
+
+  fetch('https://numerator-cataract-bloating.ngrok-free.dev/api/analytics/disruption-risks', {
+    headers:{
+      'ngrok-skip-browser-warning':'true'
+    }
+  })
+    .then(r => r.json())
+    .then(data => setDisruptions(data))
+    .catch(error => {
+      console.log('Disruption API error:', error)
+      console.log('Using mock data')
+    })
+
+}, [])
+    
   const generatePlan = async (item) => {
 
   try {
