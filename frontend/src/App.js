@@ -16,6 +16,7 @@ import {
 import {
   USE_MOCK,
   RESPONSE_PLAN_API,
+  FORECAST_API
  
 } from './api/config'
 
@@ -609,6 +610,123 @@ const Suppliers = () => {
   </div>
 )
 }
+const Forecasts = () => {
+  
+  const [skuId, setSkuId] = useState('SKU-00064')
+  const [forecastDays, setForecastDays] = useState(30)
+  const [forecastResult, setForecastResult] = useState(null)
+  const [forecastStatus, setForecastStatus] = useState('idle')
+
+  const generateForecast = () => {
+    setForecastStatus('loading')
+    fetch(FORECAST_API, {
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'ngrok-skip-browser-warning':'true'
+      },
+      body:JSON.stringify({
+        sku_id:skuId,
+        forecast_days:Number(forecastDays)
+      })
+    })
+      .then(r => r.json())
+      .then(data => {
+        console.log('Rahul Forecast API:', data)
+        setForecastResult(data)
+        setForecastStatus('live')
+      })
+      .catch(error => {
+        console.log('Forecast API error:', error)
+        setForecastStatus('mock')
+        setForecastResult({
+          message:'Forecast API unavailable — showing mock fallback',
+          sku_id:skuId,
+          forecast_days:forecastDays,
+          forecast:[
+            {day:1, predicted_demand:120},
+            {day:2, predicted_demand:135},
+            {day:3, predicted_demand:128}
+          ]
+        })
+      })
+  }
+
+  return (
+    <div style={{
+      padding:'40px',
+      flex:1,
+      background:'#F4F6F9',
+      minHeight:'100vh'
+    }}>
+      <h2 style={{color:'#1B2A4A'}}>Forecasts</h2>
+
+     <p style={{color:'#4A5568'}}>
+  {
+    forecastStatus === 'live'
+      ? 'Demand forecast powered by Rahul API'
+      : forecastStatus === 'mock'
+      ? 'Showing mock forecast data'
+      : forecastStatus === 'loading'
+      ? 'Loading forecast from Rahul API...'
+      : 'Enter SKU details to generate forecast'
+  }
+</p>
+
+      <div style={{
+        background:'white',
+        padding:'20px',
+        borderRadius:'8px',
+        marginTop:'20px'
+      }}>
+        <p>SKU ID</p>
+        <input
+          value={skuId}
+          onChange={e => setSkuId(e.target.value)}
+          style={{padding:'10px', width:'250px'}}
+        />
+
+        <p>Forecast Days</p>
+        <input
+          type="number"
+          value={forecastDays}
+          onChange={e => setForecastDays(e.target.value)}
+          style={{padding:'10px', width:'250px'}}
+        />
+
+        <br /><br />
+
+        <button
+          onClick={generateForecast}
+          style={{
+            background:'#1B2A4A',
+            color:'white',
+            border:'none',
+            padding:'10px 16px',
+            borderRadius:'6px',
+            cursor:'pointer'
+          }}
+        >
+          Generate Forecast
+        </button>
+      </div>
+
+      {forecastResult && (
+        <div style={{
+          background:'white',
+          padding:'20px',
+          borderRadius:'8px',
+          marginTop:'20px'
+        }}>
+          <h3>Forecast Result</h3>
+          <pre style={{whiteSpace:'pre-wrap'}}>
+            {JSON.stringify(forecastResult, null, 2)}
+          </pre>
+        </div>
+      )}
+    </div>
+  )
+}
 
 /* =========================
    DISRUPTIONS PAGE
@@ -695,8 +813,9 @@ ${mock.checklist.join('\n')}
     const response = await fetch(RESPONSE_PLAN_API, {
       method:'POST',
       headers:{
-        'Content-Type':'application/json'
-      },
+  'Content-Type':'application/json',
+  'ngrok-skip-browser-warning':'true'
+},
       body:JSON.stringify({
         sku:item.sku_name
       })
@@ -1007,6 +1126,15 @@ function App() {
             >
               ⚠️ Disruptions
             </div>
+            <div
+  onClick={() => setPage('forecasts')}
+  style={{
+    cursor:'pointer',
+    fontWeight:'bold'
+  }}
+>
+  📈 Forecasts
+</div>
 
           </div>
         </div>
@@ -1049,6 +1177,7 @@ function App() {
         {page === 'inventory' && <Inventory />}
         {page === 'suppliers' && <Suppliers />}
         {page === 'disruptions' && <Disruptions />}
+        {page === 'forecasts' && <Forecasts />}
       </>
     }
   />
