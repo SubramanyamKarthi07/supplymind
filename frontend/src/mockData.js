@@ -66,6 +66,61 @@ export const mockPlans = {
 }
 
 export const supplierDetails = {
+    'SUP-0047': {
+    supplier_id:'SUP-0047',
+    name:'SUP-0047',
+    city:'-',
+    tier:'Tier 1',
+    otif:30,
+    lead_time:'-',
+    fill_rate:'-',
+    risk_score:'-',
+    risk_tier:'High',
+    top_features:[
+      'Low OTIF percentage',
+      'Supplier risk detected',
+      'Backend live supplier record'
+    ],
+    trend:[
+      {month:'Jan', otif:45},
+      {month:'Feb', otif:42},
+      {month:'Mar', otif:39},
+      {month:'Apr', otif:36},
+      {month:'May', otif:33},
+      {month:'Jun', otif:30},
+    ],
+    skus:[
+      'Live supplier SKU data unavailable'
+    ]
+  },
+
+  'SUP-0045': {
+    supplier_id:'SUP-0045',
+    name:'SUP-0045',
+    city:'-',
+    tier:'Tier 3',
+    otif:30,
+    lead_time:'-',
+    fill_rate:'-',
+    risk_score:'-',
+    risk_tier:'High',
+    top_features:[
+      'Low OTIF percentage',
+      'Supplier risk detected',
+      'Backend live supplier record'
+    ],
+    trend:[
+      {month:'Jan', otif:45},
+      {month:'Feb', otif:42},
+      {month:'Mar', otif:39},
+      {month:'Apr', otif:36},
+      {month:'May', otif:33},
+      {month:'Jun', otif:30},
+    ],
+    skus:[
+      'Live supplier SKU data unavailable'
+    ]
+  },
 
   'SUP-0112': {
     supplier_id:'SUP-0112',
