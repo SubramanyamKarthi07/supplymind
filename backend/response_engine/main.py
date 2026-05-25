@@ -10,10 +10,11 @@ import time
 # GROQ CLIENT
 # ===================================================
 
-client = Groq(
-    api_key="YOUR_GROQ_API_KEY"
-)
 
+
+client = Groq(
+    api_key=os.getenv("GROQ_API_KEY")
+)
 # ===================================================
 # FASTAPI APP
 # ===================================================
