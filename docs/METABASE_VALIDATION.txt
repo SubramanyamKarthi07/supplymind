@@ -1,0 +1,157 @@
+=================================================
+METABASE DASHBOARD VALIDATION REPORT
+=================================================
+
+Prepared By:
+Subramanyam Karthi
+
+Date:
+09-Jun-2026
+
+-------------------------------------------------
+METABASE CONNECTION STATUS
+-------------------------------------------------
+
+Status: BLOCKED
+
+Metabase URL:
+http://localhost:3000
+
+Result:
+ERR_CONNECTION_REFUSED
+
+Note:
+The URL provided in onboarding documentation is not reachable.
+PM has confirmed this is a deployment/infrastructure issue.
+Awaiting working deployed Metabase URL.
+
+-------------------------------------------------
+SQL VALIDATION RESULTS
+-------------------------------------------------
+
+KPI 1 - Total Suppliers
+
+SQL:
+SELECT COUNT(*) FROM suppliers;
+
+Result:
+200
+
+Status:
+PASS
+
+-------------------------------------------------
+
+KPI 2 - Total SKUs
+
+SQL:
+SELECT COUNT(*) FROM skus;
+
+Result:
+500
+
+Status:
+PASS
+
+-------------------------------------------------
+
+KPI 3 - Total Purchase Orders
+
+SQL:
+SELECT COUNT(*) FROM purchase_orders;
+
+Result:
+12000
+
+Status:
+PASS
+
+-------------------------------------------------
+
+KPI 4 - Average OTIF Percentage
+
+SQL:
+SELECT AVG(otif_percentage)
+FROM supplier_performance;
+
+Result:
+78.78%
+
+Status:
+PASS
+
+-------------------------------------------------
+
+KPI 5 - Stockout Count
+
+SQL:
+SELECT COUNT(*)
+FROM inventory_positions
+WHERE closing_stock_units = 0;
+
+Result:
+0
+
+Status:
+PASS
+
+-------------------------------------------------
+EXPECTED DASHBOARD SECTIONS
+-------------------------------------------------
+
+1. Supply Chain Overview KPIs
+2. Supplier Risk Heat Map
+3. Demand Forecast Dashboard
+4. Inventory Status Dashboard
+5. Purchase Order Performance Dashboard
+
+Dashboard Validation Status:
+PENDING DEPLOYED URL
+
+-------------------------------------------------
+SUPPLIER SCORECARD VALIDATION
+-------------------------------------------------
+
+6 KPI Supplier Scorecard:
+Pending Dashboard Access
+
+PSI-Based OTIF Drift Monitoring:
+Pending Dashboard Access
+
+-------------------------------------------------
+OTIF DAY-2 NOTE
+-------------------------------------------------
+
+No calculation changes performed today.
+
+If mismatch exists between:
+purchase_orders
+and
+supplier_performance
+
+it will be analyzed during Day 2 validation.
+
+-------------------------------------------------
+ERROR COUNT
+-------------------------------------------------
+
+1
+
+Issue:
+Metabase deployment URL unavailable.
+
+-------------------------------------------------
+FINAL STATUS
+-------------------------------------------------
+
+SQL Validation:
+COMPLETE
+
+Dashboard Validation:
+PENDING DEPLOYED URL
+
+Warehouse Validation:
+COMPLETE
+
+Prepared By:
+Subramanyam Karthi
