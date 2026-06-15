@@ -1,96 +1,16 @@
-# ===============================
-# FASTAPI CORE FRAMEWORK
-# ===============================
-
 fastapi==0.136.1
-# Main web framework to build APIs (your backend server)
-
 uvicorn==0.47.0
-# ASGI server that runs FastAPI app (used in deployment like Render)
-
-# ===============================
-# DATA VALIDATION / MODELS
-# ===============================
 
 pydantic==2.13.4
-# Handles request/response validation (your DisruptionRequest model)
-
-typing_extensions==4.15.0
-# Adds advanced typing support for Python (used by Pydantic/FastAPI)
-
-# ===============================
-# ENVIRONMENT VARIABLES
-# ===============================
-
 python-dotenv==1.0.1
-# Loads variables from .env file (like GROQ_API_KEY locally)
-
-# ===============================
-# AI / LLM API CLIENT
-# ===============================
 
 groq>=0.11.0
-# Official SDK to call Groq LLM (Llama models, etc.)
-
-# ===============================
-# FILE / FORM DATA SUPPORT
-# ===============================
-
 python-multipart==0.0.9
-# Enables file uploads / form-data handling in FastAPI
-
-# ===============================
-# DATA PROCESSING
-# ===============================
 
 pandas==2.2.1
-# Used for reading CSV files and data manipulation (supplier/inventory data)
-
 numpy==1.26.4
-# Required by pandas for numerical operations and arrays
-
-# ===============================
-# DATABASE (optional in your app)
-# ===============================
 
 SQLAlchemy==2.0.49
-# ORM for database interactions (not heavily used in your current code but included)
-
 psycopg2-binary==2.9.12
-# PostgreSQL database connector (if you connect your app to Postgres later)
-
-# ===============================
-# HTTP / API REQUEST HANDLING
-# ===============================
 
 httpx==0.28.1
-# Modern HTTP client (used internally by FastAPI / Groq / external APIs)
-
-anyio==4.13.0
-# Async runtime layer used by FastAPI
-
-sniffio==1.3.1
-# Detects async environment (used by anyio internally)
-
-# ===============================
-# LOW-LEVEL HTTP SUPPORT
-# ===============================
-
-h11==0.16.0
-# HTTP/1.1 protocol implementation (used by uvicorn)
-
-# ===============================
-# UTILITY LIBRARIES
-# ===============================
-
-click==8.4.0
-# Used by uvicorn CLI (command-line interface tools)
-
-idna==3.14
-# Handles international domain names in URLs
-
-certifi==2026.4.22
-# Provides trusted SSL certificates for HTTPS requests
-
-colorama==0.6.0
-# Adds colored logs in terminal (useful for debugging in deployment)
