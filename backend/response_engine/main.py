@@ -251,22 +251,27 @@ def generate_executive_briefing(date: str):
     suppliers = pd.read_csv("data/raw/suppliers.csv")
     supplier_perf = pd.read_csv("data/raw/supplier_performance.csv")
     inventory = pd.read_csv("data/raw/inventory_positions.csv")
+    supplier_perf = supplier_perf.drop_duplicates(subset=["supplier_id"])
 
     at_risk = supplier_perf.nsmallest(
         5,
         "otif_percentage"
     )
 
+    seen = set()
     at_risk_suppliers = []
 
     for _, row in at_risk.iterrows():
 
-        at_risk_suppliers.append({
-            "supplier_id": row["supplier_id"],
-            "current_risk": "High",
-            "reason": f"OTIF dropped to {round(row['otif_percentage'],2)}%"
-        })
+            if row["supplier_id"] in seen:
+                continue
+            seen.add(row["supplier_id"])
 
+            at_risk_suppliers.append({
+                "supplier_id": row["supplier_id"],
+                "current_risk": "High",
+                "reason": f"OTIF dropped to {round(row['otif_percentage'],2)}%"
+    })
     improving_suppliers = []
 
     improving = supplier_perf.nlargest(
