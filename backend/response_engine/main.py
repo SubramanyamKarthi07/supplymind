@@ -253,10 +253,29 @@ Write:
 
 def generate_executive_briefing(date: str):
 
-    suppliers = pd.read_csv("data/raw/suppliers.csv")
-    supplier_perf = pd.read_csv("data/raw/supplier_performance.csv")
-    inventory = pd.read_csv("data/raw/inventory_positions.csv")
-    supplier_perf = supplier_perf.drop_duplicates(subset=["supplier_id"])
+    suppliers = pd.read_sql(
+        "SELECT * FROM suppliers",
+        engine
+    )
+
+    supplier_perf = pd.read_sql(
+        "SELECT * FROM supplier_performance",
+        engine
+    )
+
+    inventory = pd.read_sql(
+        "SELECT * FROM inventory_positions",
+        engine
+    )
+
+    supplier_perf = supplier_perf.drop_duplicates(
+        subset=["supplier_id"]
+    )
+
+    at_risk = supplier_perf.nsmallest(
+        5,
+        "otif_percentage"
+    )
 
     at_risk = supplier_perf.nsmallest(
         5,
