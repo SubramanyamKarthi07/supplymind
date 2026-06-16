@@ -375,6 +375,22 @@ def test_db():
         "status": "connected",
         "time": str(result.iloc[0][0])
     }
+
+
+@app.get("/api/tables")
+def list_tables():
+
+    query = """
+    SELECT table_name
+    FROM information_schema.tables
+    WHERE table_schema='public'
+    """
+
+    tables = pd.read_sql(query, engine)
+
+    return tables.to_dict(orient="records")
+
+
 # ===================================================
 # ROOT ENDPOINT
 # ===================================================
