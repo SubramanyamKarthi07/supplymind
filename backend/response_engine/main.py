@@ -6,6 +6,7 @@ from pydantic import BaseModel
 import pandas as pd
 from datetime import datetime
 from groq import Groq
+from sqlalchemy import create_engine
 import re
 import time
 
@@ -16,6 +17,10 @@ import time
 
 
 load_dotenv()
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+engine = create_engine(DATABASE_URL)
 
 client = Groq(
     api_key=os.getenv("GROQ_API_KEY")
@@ -355,7 +360,21 @@ def executive_briefing(date: str):
 
     return generate_executive_briefing(date)
 
+# ===================================================
+# DATABASE TEST ENDPOINT
+# ===================================================
 
+@app.get("/api/test-db")
+def test_db():
+
+    query = "SELECT NOW()"
+
+    result = pd.read_sql(query, engine)
+
+    return {
+        "status": "connected",
+        "time": str(result.iloc[0][0])
+    }
 # ===================================================
 # ROOT ENDPOINT
 # ===================================================
