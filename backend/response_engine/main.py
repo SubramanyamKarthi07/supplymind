@@ -277,11 +277,6 @@ def generate_executive_briefing(date: str):
         "otif_percentage"
     )
 
-    at_risk = supplier_perf.nsmallest(
-        5,
-        "otif_percentage"
-    )
-
     seen = set()
     at_risk_suppliers = []
 
@@ -379,35 +374,8 @@ def executive_briefing(date: str):
 
     return generate_executive_briefing(date)
 
-# ===================================================
-# DATABASE TEST ENDPOINT
-# ===================================================
-
-@app.get("/api/test-db")
-def test_db():
-
-    query = "SELECT NOW()"
-
-    result = pd.read_sql(query, engine)
-
-    return {
-        "status": "connected",
-        "time": str(result.iloc[0][0])
-    }
 
 
-@app.get("/api/tables")
-def list_tables():
-
-    query = """
-    SELECT table_name
-    FROM information_schema.tables
-    WHERE table_schema='public'
-    """
-
-    tables = pd.read_sql(query, engine)
-
-    return tables.to_dict(orient="records")
 
 
 # ===================================================
