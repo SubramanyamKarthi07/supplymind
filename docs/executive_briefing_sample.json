@@ -1,0 +1,44 @@
+{
+  "date": "2026-06-13",
+
+  "summary": "Yesterday: 3 suppliers at risk, 2 improved, 1 stockout prevented",
+
+  "at_risk_suppliers": [
+    {
+      "supplier_id": "SUP-0069",
+      "current_risk": "High",
+      "reason": "OTIF dropped from 95% to 60%"
+    },
+    {
+      "supplier_id": "SUP-0100",
+      "current_risk": "High",
+      "reason": "15% quality failures detected"
+    }
+  ],
+
+  "improving_suppliers": [
+    {
+      "supplier_id": "SUP-0045",
+      "improvement": "OTIF improved from 80% to 91%"
+    },
+    {
+      "supplier_id": "SUP-0078",
+      "improvement": "Lead time reduced by 12%"
+    }
+  ],
+
+  "inventory_alerts": [
+    {
+      "sku_id": "SK-00045",
+      "days_of_cover": 3,
+      "severity": "Critical"
+    }
+  ],
+
+  "forecast_accuracy": {
+    "avg_mape": 8.2,
+    "trend": "Improving"
+  },
+
+  "key_insight": "Electronics suppliers are showing recovery after previous disruptions."
+}

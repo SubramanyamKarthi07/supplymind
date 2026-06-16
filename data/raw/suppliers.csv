@@ -1,0 +1,201 @@
+supplier_id,supplier_name,category,city,city_tier,avg_lead_time_days,lead_time_variance_days,annual_contract_value_inr,years_active,payment_terms_days,certifications
+SUP-0001,Biotique,Electronics,Madurai,Tier 3,42.9,7.59,39200088,22,45,ISO 9001
+SUP-0002,Schaeffler India,Chemicals,Jodhpur,Tier 3,10.9,1.93,2330306,24,45,ISO 14001
+SUP-0003,Suminter India Organics,Electronics,Pune,Tier 1,28.5,4.27,8324828,9,30,ISO 9001 + IATF
+SUP-0004,Pilgrim Supply,Chemicals,Rajkot,Tier 3,20.4,3.61,35344211,17,45,Multiple
+SUP-0005,Sunhearrt Ceramic,Chemicals,Jabalpur,Tier 3,16.1,2.85,6730948,21,30,ISO 9001
+SUP-0006,Jtekt India,Automotive Parts,Hyderabad,Tier 1,16.1,2.42,10370250,1,60,None
+SUP-0007,Marico Supply,Raw Materials,Hyderabad,Tier 1,10.8,1.62,14779551,21,45,ISO 9001
+SUP-0008,Tata Steel Components,Chemicals,Chennai,Tier 1,8.2,1.23,1126690,8,45,ISO 9001
+SUP-0009,Heidelberg India,Electronics,Madurai,Tier 3,25.0,4.42,18972923,2,45,ISO 9001
+SUP-0010,Mangalam Cement,Chemicals,Hyderabad,Tier 1,15.5,2.32,27389716,7,30,ISO 14001
+SUP-0011,Kama Ayurveda,Automotive Parts,Nagpur,Tier 2,23.8,3.57,5508254,4,45,ISO 9001 + IATF
+SUP-0012,Polycab India,Chemicals,Raipur,Tier 3,16.4,2.9,81261855,8,90,Multiple
+SUP-0013,Cummins India,Safety Equipment,Delhi,Tier 1,15.1,2.26,107334939,23,45,ISO 9001
+SUP-0014,India Cements,Safety Equipment,Nagpur,Tier 2,16.3,2.44,6185737,21,45,Multiple
+SUP-0015,Hira Cement,Electronics,Indore,Tier 2,26.0,3.9,7242589,7,60,ISO 9001
+SUP-0016,NRB Bearings,Electrical,Vadodara,Tier 2,21.0,3.15,36776363,15,45,ISO 9001
+SUP-0017,HCL Materials,Raw Materials,Vadodara,Tier 2,20.4,3.06,1286204,23,60,None
+SUP-0018,Sundram Fasteners,Automotive Parts,Vadodara,Tier 2,28.7,4.3,21569989,6,90,ISO 9001
+SUP-0019,Hamdard India,Packaging,Mumbai,Tier 1,11.1,1.66,9435014,8,45,ISO 9001 + IATF
+SUP-0020,Exide Industries,Electronics,Bangalore,Tier 1,34.8,5.22,8671951,16,45,None
+SUP-0021,Neemans,Safety Equipment,Jaipur,Tier 2,9.9,1.49,29319994,18,60,ISO 9001
+SUP-0022,Dot & Key Supply,Electronics,Ludhiana,Tier 2,25.3,3.79,8228583,1,60,ISO 14001
+SUP-0023,Zuari Cement,Electrical,Hyderabad,Tier 1,19.4,2.91,185883280,1,45,ISO 9001
+SUP-0024,Infosys Supply Co,Electronics,Gwalior,Tier 3,31.0,5.49,35759800,6,60,None
+SUP-0025,NatureLand Organics,Electrical,Hyderabad,Tier 1,14.3,2.15,4870429,24,45,ISO 9001 + IATF
+SUP-0026,Bajaj Components,Electronics,Delhi,Tier 1,35.4,5.31,7306402,1,60,ISO 9001
+SUP-0027,Lotus Herbals,Raw Materials,Vadodara,Tier 2,20.1,3.02,5061841,21,30,ISO 14001
+SUP-0028,Time Technoplast,Electrical,Pune,Tier 1,25.0,3.75,2027915,20,30,ISO 14001
+SUP-0029,ABB Components,Raw Materials,Vadodara,Tier 2,17.3,2.6,2012034,21,45,ISO 9001
+SUP-0030,Samvardhana Motherson,Packaging,Mumbai,Tier 1,8.2,1.23,8483651,14,30,ISO 9001
+SUP-0031,Rex Remedies,Automotive Parts,Ahmedabad,Tier 1,17.0,2.55,20896096,11,60,ISO 9001
+SUP-0032,Motherson Sumi,Packaging,Vadodara,Tier 2,12.5,1.88,9244779,18,90,ISO 9001
+SUP-0033,Godrej Materials,Electronics,Ludhiana,Tier 2,22.5,3.38,10847152,10,60,ISO 9001
+SUP-0034,RiteBite Max Protein,Raw Materials,Jabalpur,Tier 3,13.7,2.42,1961829,24,60,ISO 9001 + IATF
+SUP-0035,Finolex Cables,Electronics,Indore,Tier 2,28.2,4.23,15239015,24,45,Multiple
+SUP-0036,Ecotyl,Packaging,Raipur,Tier 3,9.2,1.63,29869132,21,45,ISO 14001
+SUP-0037,NCL Industries,Mechanical Components,Jabalpur,Tier 3,27.6,4.89,500000000,8,60,ISO 9001 + IATF
+SUP-0038,Varmora Granito,Raw Materials,Mumbai,Tier 1,7.7,1.16,20511562,10,90,None
+SUP-0039,Ultratech Supply,Chemicals,Meerut,Tier 3,10.0,1.77,22830220,4,45,None
+SUP-0040,Emami Agrotech,Electrical,Ahmedabad,Tier 1,18.7,2.8,1351829,18,45,ISO 9001 + IATF
+SUP-0041,Sitaram Ayurveda,Electrical,Madurai,Tier 3,10.1,1.79,21529324,21,45,ISO 9001 + IATF
+SUP-0042,Morarka Organic,Mechanical Components,Mumbai,Tier 1,16.5,2.48,3974245,3,60,None
+SUP-0043,Lumax Industries,Electronics,Ludhiana,Tier 2,22.7,3.4,16208974,23,45,None
+SUP-0044,Baba Ramdev Supply,Electronics,Jaipur,Tier 2,22.6,3.39,60132686,24,30,ISO 9001
+SUP-0045,Minda Corp,Automotive Parts,Jabalpur,Tier 3,18.9,3.35,4679791,21,45,None
+SUP-0046,Anand Automotive,Chemicals,Indore,Tier 2,9.3,1.4,20052028,10,90,ISO 9001
+SUP-0047,Ramkrishna Forgings,Consumables,Hyderabad,Tier 1,4.6,0.69,27304139,24,45,ISO 9001
+SUP-0048,Orient Electric,Mechanical Components,Bangalore,Tier 1,26.5,3.97,1895227,9,45,ISO 9001
+SUP-0049,Taru Naturals,Raw Materials,Jaipur,Tier 2,9.6,1.44,2311570,21,90,ISO 14001
+SUP-0050,Hero Metal Works,Electronics,Nagpur,Tier 2,44.6,6.69,17952235,17,45,Multiple
+SUP-0051,Suprajit Engineering,Mechanical Components,Meerut,Tier 3,10.9,1.93,6897905,5,30,None
+SUP-0052,GKN Driveline India,Electronics,Bangalore,Tier 1,39.7,5.96,43578697,13,45,ISO 9001
+SUP-0053,Vaidyaratnam,Electronics,Vadodara,Tier 2,32.4,4.86,41258916,14,45,ISO 14001
+SUP-0054,Orient Cement,Electrical,Nagpur,Tier 2,19.7,2.95,3850039,11,90,ISO 9001 + IATF
+SUP-0055,SKF Bearings India,Mechanical Components,Ahmedabad,Tier 1,21.7,3.25,41602641,10,45,ISO 9001
+SUP-0056,Sresta Natural,Electrical,Hyderabad,Tier 1,24.2,3.63,36718400,11,30,ISO 9001
+SUP-0057,Vyas Pharmaceuticals,Raw Materials,Mumbai,Tier 1,9.3,1.4,3891020,15,30,ISO 14001
+SUP-0058,BASF India,Electronics,Varanasi,Tier 3,35.8,6.34,18904126,12,90,ISO 9001 + IATF
+SUP-0059,Orientbell Tiles,Electrical,Coimbatore,Tier 2,12.9,1.94,19187037,23,60,ISO 9001
+SUP-0060,Organic India,Raw Materials,Vadodara,Tier 2,15.7,2.35,6711480,24,45,ISO 9001 + IATF
+SUP-0061,Endurance Technologies,Electronics,Indore,Tier 2,37.6,5.64,7012305,12,90,None
+SUP-0062,Asahi India Glass,Raw Materials,Nagpur,Tier 2,15.4,2.31,9152775,12,30,ISO 9001
+SUP-0063,The Souled Store Supply,Packaging,Mumbai,Tier 1,8.5,1.27,5172311,5,45,ISO 9001 + IATF
+SUP-0064,Murudeshwar Ceramics,Electronics,Nagpur,Tier 2,31.9,4.78,7458950,3,30,ISO 9001
+SUP-0065,Dabur India Supply,Raw Materials,Madurai,Tier 3,16.6,2.94,162844560,20,90,ISO 9001 + IATF
+SUP-0066,Bell Ceramics,Automotive Parts,Madurai,Tier 3,28.9,5.12,53890207,2,45,None
+SUP-0067,mCaffeine Supply,Mechanical Components,Jaipur,Tier 2,27.5,4.12,6651688,3,45,ISO 9001 + IATF
+SUP-0068,Siemens India,Packaging,Gwalior,Tier 3,13.0,2.3,25826154,13,60,ISO 9001 + IATF
+SUP-0069,Forest Essentials,Packaging,Jaipur,Tier 2,5.3,0.79,15428668,17,45,None
+SUP-0070,Asian Granito,Electronics,Pune,Tier 1,43.0,6.45,82624542,8,30,ISO 14001
+SUP-0071,Rostaa,Consumables,Raipur,Tier 3,7.3,1.29,3036530,1,90,ISO 9001 + IATF
+SUP-0072,Setu Nutrition,Packaging,Nagpur,Tier 2,9.0,1.35,13482293,24,60,Multiple
+SUP-0073,Guardian Industries India,Raw Materials,Vadodara,Tier 2,17.0,2.55,7871618,10,45,ISO 9001
+SUP-0074,Yoga Bar Supply,Electronics,Nagpur,Tier 2,27.5,4.12,3467286,19,45,ISO 9001
+SUP-0075,Holcim India,Mechanical Components,Jaipur,Tier 2,29.9,4.48,80342545,18,60,ISO 9001 + IATF
+SUP-0076,Unjha Pharma,Packaging,Mumbai,Tier 1,10.5,1.57,20573948,24,30,None
+SUP-0077,Avvatar Proteins,Safety Equipment,Pune,Tier 1,18.7,2.8,101722727,16,60,ISO 9001
+SUP-0078,Action Shoes Supply,Automotive Parts,Rajkot,Tier 3,33.0,5.84,23877984,16,90,ISO 14001
+SUP-0079,PPG Industries India,Mechanical Components,Pune,Tier 1,24.6,3.69,7354770,24,45,ISO 14001
+SUP-0080,ZF India,Electrical,Nagpur,Tier 2,22.5,3.38,99040717,10,90,ISO 14001
+SUP-0081,Farmley,Electrical,Nagpur,Tier 2,27.1,4.07,9051992,9,30,ISO 9001 + IATF
+SUP-0082,Fit & Flex Supply,Safety Equipment,Vadodara,Tier 2,12.2,1.83,109596165,8,60,ISO 9001 + IATF
+SUP-0083,Kansai Nerolac,Chemicals,Chennai,Tier 1,16.9,2.53,10485309,9,45,ISO 9001 + IATF
+SUP-0084,Dalmia Bharat,Electronics,Rajkot,Tier 3,18.0,3.19,12599928,13,30,ISO 9001 + IATF
+SUP-0085,Honeywell Materials,Chemicals,Surat,Tier 2,14.5,2.17,10783871,7,45,None
+SUP-0086,Liberty Shoes Supply,Automotive Parts,Ahmedabad,Tier 1,24.0,3.6,30039454,19,30,ISO 9001
+SUP-0087,Tenneco India,Automotive Parts,Pune,Tier 1,20.3,3.04,14710558,13,30,None
+SUP-0088,Henkel India,Packaging,Bangalore,Tier 1,12.7,1.9,14754150,13,60,None
+SUP-0089,Conscious Food,Electronics,Coimbatore,Tier 2,43.7,6.56,148548713,10,60,ISO 9001
+SUP-0090,Ayurvedagram,Chemicals,Bangalore,Tier 1,9.1,1.36,141220039,3,30,None
+SUP-0091,Nutty Yogi,Packaging,Hyderabad,Tier 1,13.6,2.04,6549556,20,60,ISO 9001
+SUP-0092,Mokobara Supply,Raw Materials,Nagpur,Tier 2,19.4,2.91,4989769,20,45,ISO 9001 + IATF
+SUP-0093,ACC Cement Supply,Electronics,Vadodara,Tier 2,23.0,3.45,3680326,20,30,ISO 9001
+SUP-0094,Faurecia India,Safety Equipment,Delhi,Tier 1,20.1,3.02,20821987,1,45,Multiple
+SUP-0095,Nilkamal,Packaging,Ludhiana,Tier 2,8.6,1.29,142282013,12,45,ISO 9001
+SUP-0096,Ramco Cements,Consumables,Delhi,Tier 1,9.3,1.4,15683791,4,45,Multiple
+SUP-0097,Owens Corning India,Electronics,Surat,Tier 2,41.5,6.22,47437000,12,45,ISO 14001
+SUP-0098,Bajaj Electricals,Automotive Parts,Coimbatore,Tier 2,33.7,5.06,19587801,18,90,None
+SUP-0099,AkzoNobel India,Mechanical Components,Ludhiana,Tier 2,16.5,2.48,10919971,16,45,ISO 14001
+SUP-0100,Dabur Herbal,Electronics,Delhi,Tier 1,32.9,4.93,63026089,21,60,ISO 9001
+SUP-0101,Vasavadatta Cement,Mechanical Components,Nagpur,Tier 2,15.4,2.31,8703733,21,45,ISO 9001 + IATF
+SUP-0102,Responsive Industries,Chemicals,Mumbai,Tier 1,10.0,1.5,14763513,4,45,ISO 9001 + IATF
+SUP-0103,Hindustan Zinc,Chemicals,Vadodara,Tier 2,18.6,2.79,10887605,17,30,Multiple
+SUP-0104,Gabriel India,Chemicals,Chennai,Tier 1,7.2,1.08,38764167,15,30,None
+SUP-0105,Bestone Ceramic,Mechanical Components,Indore,Tier 2,27.8,4.17,5437702,20,30,ISO 9001 + IATF
+SUP-0106,Goodwill Ceramic,Electronics,Indore,Tier 2,18.8,2.82,16132342,20,60,None
+SUP-0107,Minda Industries,Raw Materials,Varanasi,Tier 3,12.2,2.16,76947821,10,45,ISO 9001
+SUP-0108,Aranyaani,Packaging,Delhi,Tier 1,5.6,0.84,9115211,2,60,ISO 9001
+SUP-0109,Sherwin Williams India,Electronics,Surat,Tier 2,32.2,4.83,87252949,21,60,ISO 9001 + IATF
+SUP-0110,Luminous Power,Chemicals,Hyderabad,Tier 1,13.3,2.0,13112058,3,45,ISO 9001
+SUP-0111,Kajaria Ceramics,Safety Equipment,Ludhiana,Tier 2,16.3,2.44,1314802,1,60,None
+SUP-0112,Asian Paints Inputs,Consumables,Jaipur,Tier 2,5.5,0.82,3821908,17,60,ISO 9001 + IATF
+SUP-0113,Lakhani Armaan,Electronics,Indore,Tier 2,37.8,5.67,3366318,4,30,ISO 9001
+SUP-0114,Khadi Natural,Consumables,Pune,Tier 1,9.6,1.44,6078602,3,45,None
+SUP-0115,Precision Castparts,Packaging,Nagpur,Tier 2,11.6,1.74,21358632,10,45,ISO 9001
+SUP-0116,Syska LED,Electrical,Varanasi,Tier 3,22.0,3.89,13926974,16,60,None
+SUP-0117,Reliance Polymers,Mechanical Components,Meerut,Tier 3,16.4,2.9,5929811,4,60,ISO 9001
+SUP-0118,Oushadhi,Consumables,Vadodara,Tier 2,8.5,1.27,3494146,11,30,ISO 9001
+SUP-0119,Berger Paints Supply,Mechanical Components,Nagpur,Tier 2,13.2,1.98,8264071,15,60,ISO 9001
+SUP-0120,Amara Raja Batteries,Electrical,Ahmedabad,Tier 1,10.8,1.62,28787514,1,30,ISO 9001
+SUP-0121,Nirogam,Packaging,Bangalore,Tier 1,7.3,1.09,153254111,7,90,ISO 9001
+SUP-0122,Lavanya Tiles,Electronics,Surat,Tier 2,23.1,3.47,15078357,14,30,ISO 9001 + IATF
+SUP-0123,Urban Platter,Chemicals,Mumbai,Tier 1,10.6,1.59,17701029,12,45,Multiple
+SUP-0124,Sara Industries,Electrical,Indore,Tier 2,12.2,1.83,27671992,16,45,None
+SUP-0125,Mamaearth Supply,Mechanical Components,Ludhiana,Tier 2,12.3,1.84,622797,2,90,ISO 9001
+SUP-0126,JK Cement,Electrical,Hyderabad,Tier 1,23.0,3.45,43567948,22,45,Multiple
+SUP-0127,Continental India,Consumables,Coimbatore,Tier 2,4.5,0.67,5402155,6,60,ISO 9001
+SUP-0128,Nourish You,Consumables,Varanasi,Tier 3,7.6,1.35,20095262,22,45,ISO 14001
+SUP-0129,Supreme Industries,Electronics,Indore,Tier 2,27.1,4.07,2723970,11,60,ISO 9001
+SUP-0130,Arya Vaidya Pharmacy,Electrical,Pune,Tier 1,25.1,3.77,4091248,15,90,ISO 9001
+SUP-0131,Jivika Naturals,Packaging,Pune,Tier 1,5.1,0.76,14882206,7,45,ISO 9001 + IATF
+SUP-0132,Nexion Ceramic,Packaging,Pune,Tier 1,13.1,1.96,32714609,11,60,None
+SUP-0133,Zandu Pharma,Packaging,Surat,Tier 2,11.8,1.77,4033451,18,30,ISO 9001
+SUP-0134,Sorich Organics,Electronics,Jodhpur,Tier 3,35.6,6.3,29237689,7,30,ISO 9001 + IATF
+SUP-0135,Sona BLW Precision,Chemicals,Jaipur,Tier 2,19.6,2.94,83414049,1,45,ISO 9001
+SUP-0136,Aamra Supply,Chemicals,Coimbatore,Tier 2,9.3,1.4,1772991,16,45,ISO 9001
+SUP-0137,Muscleblaze Supply,Automotive Parts,Ahmedabad,Tier 1,29.7,4.46,11524302,20,60,ISO 9001 + IATF
+SUP-0138,Keeros Foods,Consumables,Mumbai,Tier 1,4.9,0.73,65704806,14,30,ISO 9001
+SUP-0139,Jotun India,Packaging,Nagpur,Tier 2,11.2,1.68,2670124,1,45,None
+SUP-0140,Havells India,Electronics,Ahmedabad,Tier 1,28.0,4.2,13106825,21,60,Multiple
+SUP-0141,NSK India,Mechanical Components,Indore,Tier 2,12.6,1.89,3759065,19,30,ISO 9001
+SUP-0142,TVS Supply Chain,Electrical,Nagpur,Tier 2,27.0,4.05,12289016,20,60,ISO 9001
+SUP-0143,Johnson Tiles,Mechanical Components,Chennai,Tier 1,26.3,3.94,32610219,24,90,ISO 9001
+SUP-0144,Navdanya Supply,Mechanical Components,Mumbai,Tier 1,24.2,3.63,997390,3,60,Multiple
+SUP-0145,Maha Cement,Packaging,Jaipur,Tier 2,7.2,1.08,5784525,7,30,ISO 9001 + IATF
+SUP-0146,Oziva Supply,Electronics,Bangalore,Tier 1,22.5,3.38,19211047,10,60,None
+SUP-0147,Doodle Supply,Mechanical Components,Surat,Tier 2,21.4,3.21,17598213,23,90,None
+SUP-0148,Disguise Supply,Packaging,Mumbai,Tier 1,12.1,1.81,9116318,7,45,None
+SUP-0149,24 Mantra Organic,Safety Equipment,Jodhpur,Tier 3,16.1,2.85,9182766,20,30,ISO 9001
+SUP-0150,Kerala Ayurveda,Automotive Parts,Raipur,Tier 3,20.4,3.61,17563089,18,45,ISO 9001 + IATF
+SUP-0151,Nitco Tiles,Electrical,Delhi,Tier 1,19.5,2.92,307490973,24,60,None
+SUP-0152,Organic Tattva,Electronics,Nagpur,Tier 2,28.2,4.23,13060083,7,30,None
+SUP-0153,Panasonic India,Raw Materials,Bangalore,Tier 1,7.6,1.14,7099000,7,45,ISO 9001
+SUP-0154,Shalimar Paints,Consumables,Ludhiana,Tier 2,9.0,1.35,19102671,4,45,None
+SUP-0155,KPIT Technologies,Raw Materials,Ahmedabad,Tier 1,8.2,1.23,103328155,18,60,ISO 14001
+SUP-0156,Vedix Supply,Raw Materials,Vadodara,Tier 2,20.4,3.06,147458215,18,60,None
+SUP-0157,KEI Industries,Raw Materials,Mumbai,Tier 1,15.0,2.25,500000,6,60,None
+SUP-0158,Phalada Pure,Chemicals,Delhi,Tier 1,16.5,2.48,7095538,5,60,ISO 14001
+SUP-0159,Kakatiya Cement,Packaging,Meerut,Tier 3,8.6,1.52,10474834,14,45,ISO 9001 + IATF
+SUP-0160,Mili Foods,Raw Materials,Delhi,Tier 1,14.4,2.16,3016650,8,45,Multiple
+SUP-0161,Just Herbs,Electronics,Pune,Tier 1,43.3,6.49,14264132,6,45,ISO 9001 + IATF
+SUP-0162,Adani Wilmar Supply,Automotive Parts,Jaipur,Tier 2,17.2,2.58,44202423,13,45,None
+SUP-0163,Crompton Greaves,Chemicals,Delhi,Tier 1,10.9,1.64,6865962,8,30,None
+SUP-0164,Wellbeing Nutrition,Electronics,Surat,Tier 2,41.3,6.19,60202317,11,60,ISO 9001
+SUP-0165,Plum Goodness Supply,Packaging,Surat,Tier 2,8.5,1.27,11517854,19,30,ISO 9001
+SUP-0166,Pidilite Industries,Electronics,Indore,Tier 2,14.4,2.16,50829395,11,45,None
+SUP-0167,Praakritik,Mechanical Components,Ahmedabad,Tier 1,24.2,3.63,42117551,18,45,None
+SUP-0168,Campus Activewear Supply,Packaging,Hyderabad,Tier 1,11.6,1.74,4191173,16,45,None
+SUP-0169,Paragon Supply,Electronics,Coimbatore,Tier 2,39.8,5.97,3966486,15,60,None
+SUP-0170,Earth Rhythm Supply,Electrical,Delhi,Tier 1,14.5,2.17,57396015,3,90,Multiple
+SUP-0171,Kottakkal Arya,Electronics,Jaipur,Tier 2,44.4,6.66,15493757,8,60,None
+SUP-0172,Arya Vaidya Sala,Packaging,Hyderabad,Tier 1,5.2,0.78,141699626,17,60,ISO 9001
+SUP-0173,Saint-Gobain India,Electronics,Jaipur,Tier 2,30.4,4.56,3461059,15,45,ISO 14001
+SUP-0174,Kirloskar Pumps,Mechanical Components,Surat,Tier 2,29.7,4.46,33248854,3,60,None
+SUP-0175,Valeo India,Electronics,Ludhiana,Tier 2,20.6,3.09,3675523,8,45,ISO 9001 + IATF
+SUP-0176,NSG India,Raw Materials,Pune,Tier 1,16.6,2.49,11288122,23,45,None
+SUP-0177,Foxtale Supply,Safety Equipment,Hyderabad,Tier 1,7.6,1.14,3535183,15,30,ISO 14001
+SUP-0178,Sahaja Samrudha,Chemicals,Delhi,Tier 1,12.1,1.81,61433160,5,60,ISO 9001
+SUP-0179,AGC India,Raw Materials,Vadodara,Tier 2,8.7,1.3,10764647,13,45,None
+SUP-0180,Larsen Industrial,Automotive Parts,Mumbai,Tier 1,31.7,4.75,23415631,6,60,ISO 9001
+SUP-0181,Sampurn Earth,Packaging,Meerut,Tier 3,5.3,0.94,15906804,10,60,None
+SUP-0182,Subros Limited,Mechanical Components,Ludhiana,Tier 2,11.7,1.75,65518400,9,60,Multiple
+SUP-0183,Baidyanath,Consumables,Bangalore,Tier 1,6.8,1.02,1439180,13,45,ISO 9001
+SUP-0184,Patanjali Supply,Safety Equipment,Surat,Tier 2,7.5,1.12,2443091,16,30,ISO 14001
+SUP-0185,The Derma Co Supply,Mechanical Components,Pune,Tier 1,21.5,3.23,26976374,5,30,ISO 9001
+SUP-0186,Bharat Forge,Electrical,Nagpur,Tier 2,10.4,1.56,5529962,19,90,ISO 9001
+SUP-0187,Somany Ceramics,Chemicals,Varanasi,Tier 3,16.0,2.83,12883173,19,60,None
+SUP-0188,Euro Ceramic,Electrical,Nagpur,Tier 2,14.6,2.19,25432004,19,30,ISO 14001
+SUP-0189,Kapiva,Packaging,Coimbatore,Tier 2,6.4,0.96,11875341,23,30,ISO 9001
+SUP-0190,Aisin India,Raw Materials,Pune,Tier 1,12.2,1.83,6621548,20,60,ISO 9001 + IATF
+SUP-0191,UNO Minda,Electrical,Indore,Tier 2,12.0,1.8,31960294,17,90,ISO 9001
+SUP-0192,Amrita,Electronics,Chennai,Tier 1,28.6,4.29,19990391,7,60,ISO 9001 + IATF
+SUP-0193,Bharat Electronics,Mechanical Components,Surat,Tier 2,11.9,1.78,15416230,18,30,ISO 9001 + IATF
+SUP-0194,Charak Pharma,Mechanical Components,Surat,Tier 2,11.1,1.66,12726701,1,45,ISO 9001 + IATF
+SUP-0195,Shree Cement,Electronics,Nagpur,Tier 2,15.8,2.37,28132174,18,45,None
+SUP-0196,Simpolo Vitrified,Mechanical Components,Ludhiana,Tier 2,16.1,2.42,11332625,8,45,Multiple
+SUP-0197,Philips India,Mechanical Components,Coimbatore,Tier 2,10.4,1.56,3176136,2,30,None
+SUP-0198,3M India,Electrical,Surat,Tier 2,12.6,1.89,26874005,3,30,ISO 9001
+SUP-0199,Denso India,Packaging,Coimbatore,Tier 2,9.5,1.43,47924959,23,30,ISO 9001
+SUP-0200,Osram India,Electronics,Surat,Tier 2,21.3,3.19,3237260,18,90,ISO 9001

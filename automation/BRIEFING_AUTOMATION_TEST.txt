@@ -1,0 +1,13 @@
+7 Day Simulation Results
+
+Day 1 - PASS
+Day 2 - PASS
+Day 3 - PASS
+Day 4 - PASS
+Day 5 - PASS
+Day 6 - PASS
+Day 7 - PASS
+
+Emails delivered.
+No duplicates.
+Formatting correct.
