@@ -16,6 +16,7 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from datetime import datetime, timedelta
 import requests
 
+
 # Import local modules
 from distribution_list import EXECUTIVE_EMAILS
 from email_template import build_email
@@ -148,6 +149,10 @@ def run_daily_briefing():
         print("\nERROR: Briefing generation failed")
 
         print(e)
+        
+        print(
+    "Retry scheduled in 30 minutes"
+)
 
         # Send alert email
         try:
