@@ -10,22 +10,38 @@ def send_email(
     sender_password
 ):
 
-    msg = MIMEText(body)
+    try:
 
-    msg["Subject"] = subject
-    msg["From"] = sender_email
-    msg["To"] = recipient
+        msg = MIMEText(body)
 
-    with smtplib.SMTP(
-        "smtp.gmail.com",
-        587
-    ) as server:
+        msg["Subject"] = subject
+        msg["From"] = sender_email
+        msg["To"] = recipient
 
-        server.starttls()
+        with smtplib.SMTP(
+            "smtp.gmail.com",
+            587
+        ) as server:
 
-        server.login(
-            sender_email,
-            sender_password
+            server.starttls()
+
+            server.login(
+                sender_email,
+                sender_password
+            )
+
+            server.send_message(msg)
+
+        print(
+            f"Email sent successfully to {recipient}"
         )
 
-        server.send_message(msg)
+        return True
+
+    except Exception as e:
+
+        print(
+            f"Email delivery failed: {e}"
+        )
+
+        return False
