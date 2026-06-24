@@ -301,9 +301,59 @@ def generate_executive_briefing(date: str):
                 "supplier_id": row["supplier_id"],
                 "current_risk": "High",
                 "reason": f"OTIF dropped to {otif}%",
-                "root_cause": "Declining supplier delivery performance",
-                "recommended_action": "Activate alternate supplier and increase safety stock",
-                "priority": priority
+
+                "root_cause":
+                "Declining supplier delivery performance",
+
+                "recommended_action":
+                "Activate alternate supplier and increase safety stock",
+
+                "priority":
+                priority,
+
+                "supplier_relationships": {
+                    "upstream_suppliers": [
+                        "Raw Material Supplier A"
+                    ],
+
+                    "downstream_impact": [
+                        "Assembly Plant B",
+                        "Assembly Plant C"
+                    ],
+
+                    "criticality":
+                    "Yes",
+
+                    "backup_options":
+                    2
+                },
+
+                "competitive_analysis": {
+                    "cost_comparison":
+                    "+10%",
+
+                    "quality_comparison":
+                    "+5%",
+
+                    "recommendation":
+                    "Negotiate pricing or shift volume to alternative supplier"
+                },
+
+                "scenario_analysis": [
+                    {
+                        "if_condition":
+                        "OTIF drops another 5%",
+
+                        "impact":
+                        "Potential Q3 shipment delays",
+
+                        "action":
+                        "Shift 20% volume to backup supplier",
+
+                        "urgency":
+                        priority
+                    }
+                ]
             })
     improving_suppliers = []
 
