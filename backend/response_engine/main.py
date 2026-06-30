@@ -9,6 +9,9 @@ from groq import Groq
 from sqlalchemy import create_engine
 import re
 import time
+import concurrent.futures
+
+from functools import lru_cache
 
 # ===================================================
 # GROQ CLIENT
@@ -25,6 +28,53 @@ engine = create_engine(DATABASE_URL)
 client = Groq(
     api_key=os.getenv("GROQ_API_KEY")
 )
+
+# ===================================================
+# DATABASE CACHE
+# ===================================================
+
+class DatabaseCache:
+
+    def __init__(self):
+        self.suppliers = None
+        self.supplier_performance = None
+        self.inventory = None
+
+    def get_suppliers(self):
+
+        if self.suppliers is None:
+
+            self.suppliers = pd.read_sql(
+                "SELECT * FROM suppliers",
+                engine
+            )
+
+        return self.suppliers
+
+    def get_supplier_performance(self):
+
+        if self.supplier_performance is None:
+
+            self.supplier_performance = pd.read_sql(
+                "SELECT * FROM supplier_performance",
+                engine
+            )
+
+        return self.supplier_performance
+
+    def get_inventory(self):
+
+        if self.inventory is None:
+
+            self.inventory = pd.read_sql(
+                "SELECT * FROM inventory_positions",
+                engine
+            )
+
+        return self.inventory
+
+
+db_cache = DatabaseCache()
 # ===================================================
 # FASTAPI APP
 # ===================================================
@@ -248,26 +298,165 @@ Write:
     }
 
 # ===================================================
+# RELATIONSHIP ANALYSIS
+# ===================================================
+
+@lru_cache(maxsize=32)
+def relationship_analysis():
+
+    return {
+
+        "upstream_suppliers": [
+            "Raw Material Supplier A"
+        ],
+
+        "downstream_impact": [
+            "Assembly Plant B",
+            "Assembly Plant C"
+        ],
+
+        "criticality": "Yes",
+
+        "relationship_strength": "Strong",
+
+        "alternative_routes": [
+            "Supplier B",
+            "Supplier D"
+        ],
+
+        "co_dependencies": [
+            "SUP-0085",
+            "SUP-0114"
+        ],
+
+        "backup_options": 2
+    }
+
+
+# ===================================================
+# COMPETITIVE ANALYSIS
+# ===================================================
+
+@lru_cache(maxsize=32)
+def competitive_analysis():
+
+    return {
+
+        "cost_comparison": "+10%",
+
+        "quality_comparison": "+5%",
+
+        "historical_price_trend": "Increasing",
+
+        "market_availability":
+        "4 qualified suppliers available",
+
+        "switching_cost": "Medium",
+
+        "switching_time": "10 days",
+
+        "recommendation":
+        "Negotiate pricing or shift volume to alternative supplier"
+    }
+
+
+# ===================================================
+# SCENARIO ANALYSIS
+# ===================================================
+
+def scenario_analysis(priority):
+
+    return [
+
+        {
+
+            "scenario":"Best Case",
+
+            "if_condition":
+            "OTIF improves within 7 days",
+
+            "impact":
+            "Normal operations continue",
+
+            "probability":"30%",
+
+            "timeline":"7 days",
+
+            "mitigation":
+            "Continue supplier monitoring",
+
+            "action":
+            "Maintain current sourcing strategy",
+
+            "urgency":"LOW"
+
+        },
+
+        {
+
+            "scenario":"Likely Case",
+
+            "if_condition":
+            "OTIF remains unchanged",
+
+            "impact":
+            "Minor shipment delays",
+
+            "probability":"50%",
+
+            "timeline":"14 days",
+
+            "mitigation":
+            "Increase safety stock and monitor supplier",
+
+            "action":
+            "Shift 20% volume to backup supplier",
+
+            "urgency":priority
+
+        },
+
+        {
+
+            "scenario":"Worst Case",
+
+            "if_condition":
+            "OTIF drops another 5%",
+
+            "impact":
+            "Potential Q3 shipment delays",
+
+            "probability":"20%",
+
+            "timeline":"30 days",
+
+            "mitigation":
+            "Activate backup supplier immediately",
+
+            "action":
+            "Shift 40% volume to backup supplier",
+
+            "urgency":"URGENT"
+
+        }
+
+    ]
+
+# ===================================================
 # EXECUTIVE BRIEFING GENERATOR
 # ===================================================
 
 def generate_executive_briefing(date: str):
     start_time = time.time()
+    relationship_time = 0
+    competitive_time = 0
+    scenario_time = 0
 
-    suppliers = pd.read_sql(
-        "SELECT * FROM suppliers",
-        engine
-    )
+    suppliers = db_cache.get_suppliers()
 
-    supplier_perf = pd.read_sql(
-        "SELECT * FROM supplier_performance",
-        engine
-    )
+    supplier_perf = db_cache.get_supplier_performance()
 
-    inventory = pd.read_sql(
-        "SELECT * FROM inventory_positions",
-        engine
-    )
+    inventory = db_cache.get_inventory()
 
     supplier_perf = supplier_perf.drop_duplicates(
         subset=["supplier_id"]
@@ -298,6 +487,24 @@ def generate_executive_briefing(date: str):
             else:
                 priority = "LOW"
 
+            # ==========================================
+            # Performance Profiling
+            # ==========================================
+
+            rel_start = time.time()
+            relationship_result = relationship_analysis()
+            relationship_time += time.time() - rel_start
+
+            comp_start = time.time()
+            competitive_result = competitive_analysis()
+            competitive_time += time.time() - comp_start
+
+            scen_start = time.time()
+            scenario_result = scenario_analysis(priority)
+            scenario_time += time.time() - scen_start
+
+
+
             at_risk_suppliers.append({
                 "supplier_id": row["supplier_id"],
                 "current_risk": "High",
@@ -312,134 +519,13 @@ def generate_executive_briefing(date: str):
                 "priority":
                 priority,
 
-                "supplier_relationships": {
-                    "upstream_suppliers": [
-                        "Raw Material Supplier A"
-                    ],
+                
 
-                    "downstream_impact": [
-                        "Assembly Plant B",
-                        "Assembly Plant C"
-                    ],
+                "supplier_relationships": relationship_result,
 
-                    "criticality": "Yes",
-
-                    "relationship_strength": "Strong",
-
-                    "alternative_routes": [
-                        "Supplier B",
-                        "Supplier D"
-                    ],
-
-                    "co_dependencies": [
-                        "SUP-0085",
-                        "SUP-0114"
-                    ],
-
-                     "backup_options": 2
-                },
-
-                "competitive_analysis": {
-
-                    "cost_comparison":
-                    "+10%",
-
-                    "quality_comparison":
-                    "+5%",
-
-                    "historical_price_trend":
-                    "Increasing",
-
-                    "market_availability":
-                    "4 qualified suppliers available",
-
-                    "switching_cost":
-                    "Medium",
-
-                    "switching_time":
-                    "10 days",
-
-                    "recommendation":
-                    "Negotiate pricing or shift volume to alternative supplier"
-                },
-                "scenario_analysis": [
-
-                    {
-                        "scenario": "Best Case",
-
-                        "if_condition":
-                        "OTIF improves within 7 days",
-
-                        "impact":
-                        "Normal operations continue",
-
-                        "probability":
-                        "30%",
-
-                        "timeline":
-                        "7 days",
-
-                        "mitigation":
-                        "Continue supplier monitoring",
-
-                        "action":
-                        "Maintain current sourcing strategy",
-
-                        "urgency":
-                        "LOW"
-                    },
-
-                    {
-                        "scenario": "Likely Case",
-
-                        "if_condition":
-                        "OTIF remains unchanged",
-
-                        "impact":
-                        "Minor shipment delays",
-
-                        "probability":
-                        "50%",
-
-                        "timeline":
-                        "14 days",
-
-                        "mitigation":
-                        "Increase safety stock and monitor supplier",
-
-                        "action":
-                        "Shift 20% volume to backup supplier",
-
-                        "urgency":
-                        priority
-                    },
-
-                    {
-                        "scenario": "Worst Case",
-
-                        "if_condition":
-                        "OTIF drops another 5%",
-
-                        "impact":
-                        "Potential Q3 shipment delays",
-
-                        "probability":
-                        "20%",
-
-                        "timeline":
-                        "30 days",
-
-                        "mitigation":
-                        "Activate backup supplier immediately",
-
-                        "action":
-                        "Shift 40% volume to backup supplier",
-
-                        "urgency":
-                        "URGENT"
-                    }
-
-                ]
+                "competitive_analysis": competitive_result,
+                "scenario_analysis": scenario_result
+                  
             })
     improving_suppliers = []
 
@@ -509,8 +595,17 @@ def generate_executive_briefing(date: str):
             "avg_mape": 8.2,
             "trend": "improving"
         },
+
         "impact_tracking": impact_tracking,
+
+        "performance_profile": {
+            "relationship_analysis_seconds": round(relationship_time, 4),
+            "competitive_analysis_seconds": round(competitive_time, 4),
+            "scenario_analysis_seconds": round(scenario_time, 4)
+        },
+
         "generation_time_seconds": generation_time,
+
         "key_insight":
         f"Average OTIF currently {avg_otif}%"
     }
