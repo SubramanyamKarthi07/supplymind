@@ -252,22 +252,28 @@ Write:
     start = time.time()
 
     response = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
+        model="openai/gpt-oss-20b",
         messages=[
             {
                 "role": "user",
                 "content": prompt
             }
         ],
-        max_tokens=600,
-        temperature=0.3,
+        max_completion_tokens=2500,
+        temperature=0.3
     )
 
     end = time.time()
 
     generation_time = round(end - start, 2)
 
-    plan = response.choices[0].message.content
+    plan = response.choices[0].message.content or ""
+
+    if not plan.strip():
+        raise RuntimeError(
+            f"Groq returned an empty plan. "
+            f"Finish reason: {response.choices[0].finish_reason}"
+        )
 
     # ===================================================
     # HALLUCINATION VALIDATION
